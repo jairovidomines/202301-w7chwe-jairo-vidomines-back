@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import User from "../../database/models/User";
+import User from "../../database/models/User.js";
 import createDebug from "debug";
 
 const debug = createDebug("users:usersControllers");
