@@ -4,8 +4,8 @@ import morgan from "morgan";
 
 export const app = express();
 
-app.use(cors());
 app.disable("x-powered-by");
 
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
