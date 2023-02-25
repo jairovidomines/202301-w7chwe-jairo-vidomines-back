@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import chalk from "chalk";
 import createDebug from "debug";
 
 const debug = createDebug("users:database");
@@ -9,11 +8,9 @@ const connectDatabase = async (mongoUrl: string) => {
 
   try {
     await mongoose.connect(mongoUrl);
-    debug(chalk.green("Succesfull connection"));
+    debug("Succesfull connection");
   } catch (error: unknown) {
-    debug(
-      chalk.red("Impossible connect to database", (error as Error).message)
-    );
+    debug("Impossible connect to database", (error as Error).message);
   }
 };
 

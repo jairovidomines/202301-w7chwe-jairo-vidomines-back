@@ -8,7 +8,3 @@ const mongoUrl = process.env.MONGODB_CONNECTION_URL!;
 
 await connectDatabase(mongoUrl);
 await startServer(+port);
-
-app.get("/users", (req, res) => {
-  res.status(200).json({ pong: true });
-});
