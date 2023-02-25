@@ -1,6 +1,6 @@
 import { type Response, type Request, type NextFunction } from "express";
-import User from "../../database/models/User";
-import { getUsers } from "./usersControllers";
+import User from "../../database/models/User.js";
+import { getUsers } from "./usersControllers.js";
 
 const expectedStatus = 200;
 
