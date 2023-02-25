@@ -2,7 +2,7 @@ import chalk from "chalk";
 import createDebug from "debug";
 import { app } from "./app.js";
 
-const debug = createDebug("users");
+const debug = createDebug("users:startServer");
 
 export const startServer = async (port: number) =>
   new Promise((resolve, reject) => {
