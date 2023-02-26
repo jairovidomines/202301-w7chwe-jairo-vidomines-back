@@ -1,9 +1,10 @@
 import { type Request, type Response, type NextFunction } from "express";
-import User from "../../database/models/User.js";
 import createDebug from "debug";
+import bcryptsjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../../database/models/User.js";
 import { type UserCredentialsStructure } from "../../types.js";
 import { CustomError } from "../../CustomError/CustomError.js";
-import bcryptsjs from "bcrypt";
 
 const debug = createDebug("users:usersControllers");
 
@@ -53,4 +54,40 @@ export const createUser = async (
 
     next(customError);
   }
+};
+
+export const loginUser = async (
+  req: Request<
+    Record<string, unknown>,
+    Record<string, unknown>,
+    UserCredentialsStructure
+  >,
+  res: Response,
+  next: NextFunction
+) => {
+  const { username, password } = req.body;
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    const customError = new CustomError(
+      "Wrong credentials",
+      401,
+      "Wrong credentials"
+    );
+    next(customError);
+    return;
+  }
+
+  const verifyPassword = await bcryptsjs.compare(password, user.password!);
+
+  if (!verifyPassword) {
+    const customError = new Error("Wrong credentials");
+    next(customError);
+  }
+
+  const jwtPayload = { sub: user?._id };
+
+  const token = jwt.sign(jwtPayload, process.env.JWT_SECRET!);
+
+  res.status(200).json({ token });
 };
