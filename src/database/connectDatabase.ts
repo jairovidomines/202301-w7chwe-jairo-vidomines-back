@@ -9,7 +9,7 @@ const connectDatabase = async (mongoUrl: string) => {
   try {
     await mongoose.connect(mongoUrl);
     debug("Succesfull connection");
-  } catch (error: unknown) {
+  } catch (error) {
     debug("Impossible connect to database", (error as Error).message);
   }
 };
